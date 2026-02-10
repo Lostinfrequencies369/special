@@ -1,11 +1,26 @@
 // ==========================================
-// SWITCH PAGE LOGIC (for switch.html)
+// SWITCH PAGE LOGIC (for index.html)
 // ==========================================
 
 // Check if we're on switch page
 const lightSwitch = document.getElementById('lightSwitch');
 
 if (lightSwitch) {
+    // ✅ FIX: Force reset switch to OFF on page load
+    window.addEventListener('load', () => {
+        lightSwitch.checked = false;
+        console.log('🔄 Switch reset to OFF');
+    });
+
+    // ✅ FIX: Also reset on pageshow (handles back button)
+    window.addEventListener('pageshow', (event) => {
+        // If page is loaded from cache (back button)
+        if (event.persisted || (performance.navigation && performance.navigation.type === 2)) {
+            lightSwitch.checked = false;
+            console.log('🔄 Switch reset after back button');
+        }
+    });
+
     // Switch page logic
     let isAnimating = false;
 
@@ -92,13 +107,13 @@ if (mainVideo) {
 
 ---
 
-## **COMPLETE FOLDER STRUCTURE:**
+## **FINAL FILE STRUCTURE:**
 ```
 D:\valentine-switch-video\
 │
-├── switch.html          ← Entry page (open this first)
-├── video.html           ← Video page (auto-redirects here)
-├── switch-style.css     ← Switch styling
-├── video-style.css      ← Video page styling  
-├── script.js            ← All JavaScript logic
+├── index.html           ✅ COMPLETE
+├── video.html           ✅ COMPLETE
+├── switch-style.css     ✅ COMPLETE
+├── video-style.css      ✅ COMPLETE (Smart Fit)
+├── script.js            ✅ COMPLETE (With back button fix)
 └── video.mp4            ← Your Canva video
