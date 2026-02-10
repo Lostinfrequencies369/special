@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            position: fixed;
+        }
+
+        /* Flicker Overlay */
+        .flicker-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 240, 200, 0.6), transparent 60%);
+            opacity: 0;
+            z-index: 10;
+            pointer-events: none;
+            animation: flicker 0.2s 3;
+        }
+
+        /* Video */
+        .main-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            20% { opacity: 0.3; }
+            30% { opacity: 1; }
+            40% { opacity: 0.5; }
+            50% { opacity: 1; }
+            60% { opacity: 0.4; }
+            70% { opacity: 1; }
+            80% { opacity: 0.6; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Flicker Effect -->
+    <div class="flicker-overlay"></div>
+
+    <!-- Video -->
+    <video class="main-video" autoplay loop muted playsinline>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        const video = document.querySelector('.main-video');
+        
+        // Ensure video plays
+        video.play().catch(err => {
+            console.log('Autoplay prevented, trying again...');
+            // Retry on any user interaction
+            document.addEventListener('click', () => {
+                video.play();
+            }, { once: true });
+        });
+
+        // Prevent context menu
+        video.addEventListener('contextmenu', (e) => e.preventDefault());
+    </script>
+</body>
+</html>

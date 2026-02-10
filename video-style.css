@@ -1,0 +1,300 @@
+/* ==========================================
+   RESET & BASE STYLES
+   ========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+    position: fixed;
+}
+
+body {
+    position: relative;
+}
+
+/* ==========================================
+   FLICKER OVERLAY EFFECT
+   ========================================== */
+
+.flicker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center, 
+        rgba(255, 240, 200, 0.7), 
+        rgba(255, 230, 150, 0.4) 40%,
+        transparent 70%
+    );
+    opacity: 0;
+    z-index: 10;
+    pointer-events: none;
+    animation: flicker 0.6s ease-in-out;
+}
+
+/* ==========================================
+   MAIN VIDEO - SMART RESPONSIVE FIT
+   ========================================== */
+
+.main-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Default: Desktop - full video visible */
+    object-position: center center;
+    z-index: 1;
+    background-color: #000;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* ==========================================
+   MOBILE PORTRAIT - PERFECT FIT
+   ========================================== */
+
+/* Mobile devices in portrait mode (9:16 ratio) */
+@media (orientation: portrait) {
+    .main-video {
+        object-fit: cover; /* Fill entire screen, no black bars */
+    }
+}
+
+/* Specifically for phones (under 768px) */
+@media (max-width: 768px) {
+    .main-video {
+        object-fit: cover; /* Ensure mobile always fills screen */
+    }
+}
+
+/* ==========================================
+   DESKTOP LANDSCAPE - FULL VIDEO VISIBLE
+   ========================================== */
+
+/* Wide screens (16:9 or wider) */
+@media (orientation: landscape) and (min-width: 1024px) {
+    .main-video {
+        object-fit: contain; /* Show full video, black bars on sides */
+    }
+}
+
+/* Ultra-wide screens */
+@media (min-aspect-ratio: 21/9) {
+    .main-video {
+        object-fit: contain; /* Prevent excessive cropping */
+    }
+}
+
+/* ==========================================
+   TABLET ADJUSTMENTS
+   ========================================== */
+
+/* Tablets in portrait (like iPad - 3:4 ratio) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .main-video {
+        object-fit: cover; /* Fill tablet screen */
+    }
+}
+
+/* Tablets in landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .main-video {
+        object-fit: contain; /* Show full video */
+    }
+}
+
+/* ==========================================
+   ASPECT RATIO BASED SMART FIT
+   ========================================== */
+
+/* For screens wider than 16:9 */
+@media (min-aspect-ratio: 16/9) {
+    .main-video {
+        object-fit: contain; /* Prevent top/bottom crop */
+    }
+}
+
+/* For screens with 9:16 ratio or taller (portrait phones) */
+@media (max-aspect-ratio: 9/16) {
+    .main-video {
+        object-fit: cover; /* Perfect fit for portrait video */
+    }
+}
+
+/* For screens between 9:16 and 16:9 (most devices) */
+@media (min-aspect-ratio: 9/16) and (max-aspect-ratio: 16/9) {
+    .main-video {
+        object-fit: cover; /* Cover for intermediate ratios */
+    }
+}
+
+/* ==========================================
+   FLICKER ANIMATION (2-3 TIMES)
+   ========================================== */
+
+@keyframes flicker {
+    0% { 
+        opacity: 0; 
+    }
+    8% { 
+        opacity: 1; 
+    }
+    16% { 
+        opacity: 0.3; 
+    }
+    24% { 
+        opacity: 1; 
+    }
+    32% { 
+        opacity: 0.5; 
+    }
+    40% { 
+        opacity: 1; 
+    }
+    48% { 
+        opacity: 0.4; 
+    }
+    56% { 
+        opacity: 1; 
+    }
+    64% { 
+        opacity: 0.6; 
+    }
+    72% { 
+        opacity: 1; 
+    }
+    80% { 
+        opacity: 0.7; 
+    }
+    88% { 
+        opacity: 1; 
+    }
+    100% { 
+        opacity: 0; 
+    }
+}
+
+/* ==========================================
+   PERFORMANCE OPTIMIZATIONS
+   ========================================== */
+
+.main-video {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* ==========================================
+   PREVENT USER INTERACTIONS
+   ========================================== */
+
+.main-video {
+    pointer-events: auto; /* Allow playback */
+}
+
+.main-video::-webkit-media-controls {
+    display: none !important; /* Hide default controls */
+}
+
+.main-video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+/* ==========================================
+   DARK MODE / HIGH CONTRAST SUPPORT
+   ========================================== */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #000;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .flicker-overlay {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+/* ==========================================
+   SMALL MOBILE DEVICES (< 375px)
+   ========================================== */
+
+@media (max-width: 375px) {
+    .main-video {
+        object-fit: cover; /* Ensure coverage on small screens */
+    }
+}
+
+/* ==========================================
+   LARGE DESKTOP (4K and above)
+   ========================================== */
+
+@media (min-width: 2560px) {
+    .main-video {
+        object-fit: contain; /* Prevent over-stretching */
+    }
+}
+
+/* ==========================================
+   DEBUG MODE (Optional - Comment out in production)
+   ========================================== */
+
+/*
+.main-video {
+    border: 2px solid red;
+}
+
+.flicker-overlay {
+    border: 2px solid blue;
+}
+*/
+```
+
+---
+
+## **WHAT THIS DOES:**
+
+### **📱 Mobile Portrait (9:16):**
+```
+✅ object-fit: cover
+✅ Poora screen fill hoga
+✅ No black bars
+✅ Perfect fit for 1080x1920 video
+```
+
+### **💻 Desktop Landscape (16:9):**
+```
+✅ object-fit: contain
+✅ Full video visible
+✅ Black bars on sides (if needed)
+✅ No top/bottom crop
+```
+
+### **📊 Tablets:**
+```
+✅ Portrait: cover (fill screen)
+✅ Landscape: contain (show full video)
+```
+
+### **🎯 Smart Detection:**
+```
+✅ Aspect ratio detection
+✅ Screen size detection
+✅ Orientation detection
+✅ Device type detection
