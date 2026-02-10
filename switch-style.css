@@ -19,6 +19,29 @@ body, html {
 }
 
 /* ==========================================
+   FORCE INITIAL STATE (BACK BUTTON FIX)
+   ========================================== */
+
+/* Force switch to OFF state when unchecked */
+.switch input:not(:checked) + .button {
+    transform: translateZ(20px) rotateX(25deg) !important;
+    box-shadow: none !important;
+}
+
+.switch input:not(:checked) + .button .light {
+    opacity: 0 !important;
+    animation: none !important;
+}
+
+.switch input:not(:checked) + .button .shine {
+    opacity: 0.3 !important;
+}
+
+.switch input:not(:checked) + .button .shadow {
+    opacity: 1 !important;
+}
+
+/* ==========================================
    SWITCH CONTAINER
    ========================================== */
 
@@ -273,7 +296,7 @@ body, html {
 }
 
 /* ==========================================
-   FOCUS STATES (for keyboard navigation)
+   FOCUS STATES
    ========================================== */
 
 .switch:focus-within {

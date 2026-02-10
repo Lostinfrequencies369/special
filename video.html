@@ -7,33 +7,14 @@
     <link rel="stylesheet" href="video-style.css">
 </head>
 <body>
+    <!-- Flicker Effect -->
     <div class="flicker-overlay"></div>
-    
+
+    <!-- Video -->
     <video class="main-video" id="mainVideo" autoplay loop muted playsinline>
         <source src="video.mp4" type="video/mp4">
     </video>
 
-    <script>
-        const video = document.getElementById('mainVideo');
-        video.play().catch(err => console.log(err));
-        video.addEventListener('contextmenu', (e) => e.preventDefault());
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-```
-
----
-
-## **TESTING STEPS:**
-
-### **1. Console Check:**
-```
-F12 → Console tab → Switch ON karo
-
-Expected output:
-🔵 Script started
-🔵 Switch found: <input>
-✅ Event listener added
-🔴 Switch changed! Checked: true
-🔴 Redirecting to video.html...
-🔴 NOW redirecting!

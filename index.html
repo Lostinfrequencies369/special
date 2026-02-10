@@ -6,6 +6,7 @@
     <title>Switch</title>
     <link rel="stylesheet" href="switch-style.css">
     
+    <!-- Prevent browser cache -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -22,31 +23,20 @@
         </div>
     </label>
 
-    <!-- INLINE SCRIPT FOR TESTING -->
+    <!-- IMMEDIATE RESET SCRIPT -->
     <script>
-        console.log('🔵 Script started');
-        
-        const lightSwitch = document.getElementById('lightSwitch');
-        console.log('🔵 Switch found:', lightSwitch);
-        
-        // Reset switch
-        lightSwitch.checked = false;
-        
-        // Listen for change
-        lightSwitch.addEventListener('change', function() {
-            console.log('🔴 Switch changed! Checked:', this.checked);
+        // Force reset IMMEDIATELY on page load
+        (function() {
+            const lightSwitch = document.getElementById('lightSwitch');
+            lightSwitch.checked = false;
             
-            if (this.checked) {
-                console.log('🔴 Redirecting to video.html...');
-                
-                setTimeout(() => {
-                    console.log('🔴 NOW redirecting!');
-                    window.location.href = 'video.html';
-                }, 400);
-            }
-        });
-        
-        console.log('✅ Event listener added');
+            // Force re-render to reset CSS animations
+            lightSwitch.offsetHeight; // Trigger reflow
+            
+            console.log('🔄 Switch reset to OFF (initial state)');
+        })();
     </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
